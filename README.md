@@ -3,7 +3,7 @@
 
 This is the course project for Machine Learning for Health Care
 
-## Installation
+## Setup
 
 Create the conda environment for the project. A version of conda must be installed on your system.
 
@@ -14,23 +14,21 @@ Create the conda environment for the project. A version of conda must be install
 
 ## Dataset
 
-Download the dataset from [Pubmed RCT](https://github.com/Franck-Dernoncourt/pubmed-rct) and extract it to the `data` folder. The folder should have the following structure:
+This dataset contains a mix of samples from the Kaggle datasets Brain MRI Images for Brain Tumor Detection and Brain Tumor Classification (MRI) datasets. The folder should have the following structure:
 
     .
     ├── ...
     ├── data                    
-    │   ├── PubMed_20k_RCT
-            ├── dev.txt
-            ├── test.txt
-            ├── train.txt
-    │   ├── PubMed_20k_RCT_numbers_replaced_with_at_sign
-            ├── ...
-    │   ├── PubMed_200k_RCT
-            ├── dev.txt
-            ├── test.txt
-            ├── train.7z
-    │   ├── PubMed_200k_RCT_numbers_replaced_with_at_sign
-            ├── ...
+    │   ├── images
+            ├── no
+            ├── yes
+    │   ├── radiomics
+            ├── test_data.csv
+            ├── test_labels.npy
+            ├── train_data.csv
+            ├── train_labels.npy
+            ├── validation_data.csv
+            ├── validation_labels.npy
     └── ...
 
 ## Experiments
