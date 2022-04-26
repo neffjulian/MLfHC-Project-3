@@ -14,22 +14,7 @@ Create the conda environment for the project. A version of conda must be install
 
 ## Dataset
 
-This dataset contains a mix of samples from the Kaggle datasets Brain MRI Images for Brain Tumor Detection and Brain Tumor Classification (MRI) datasets. The folder should have the following structure:
-
-    .
-    ├── ...
-    ├── data                    
-    │   ├── images
-            ├── no
-            ├── yes
-    │   ├── radiomics
-            ├── test_data.csv
-            ├── test_labels.npy
-            ├── train_data.csv
-            ├── train_labels.npy
-            ├── validation_data.csv
-            ├── validation_labels.npy
-    └── ...
+This dataset contains a mix of samples from the Kaggle datasets Brain MRI Images for Brain Tumor Detection and Brain Tumor Classification (MRI) datasets.
 
 ## Experiments
 
