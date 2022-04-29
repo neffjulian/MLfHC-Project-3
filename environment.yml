@@ -16,3 +16,4 @@ dependencies:
   - torchmetrics
   - tensorboard
   - tensorflow
+  - shap

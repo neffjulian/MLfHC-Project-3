@@ -5,6 +5,7 @@ import torch.nn.functional as F
 import pytorch_lightning as pl
 
 from sklearn.metrics import accuracy_score
+import shap
 
 class BaselineClf(pl.LightningModule):
     def __init__(self):
@@ -59,10 +60,12 @@ class BaselineClf(pl.LightningModule):
         loss = F.cross_entropy(out, labels)   
         # Get accuracy
         _, preds = torch.max(out, dim=1)
-        acc = accuracy_score(labels.cpu(), preds.cpu())          
+        acc = accuracy_score(labels.cpu(), preds.cpu())
+        print("Accuracy: ", acc)          
         return {'val_loss': loss, 'val_acc': acc}
 
     def test_step(self, batch, batch_idx):
+        print("test")
         images, labels = batch 
         # Get predictions
         out = self(images)                    
