@@ -8,10 +8,11 @@ from sklearn.metrics import accuracy_score
 import shap
 
 class BaselineClf(pl.LightningModule):
-    def __init__(self):
+    def __init__(self, in_channels=3):
         super().__init__()
+        self.in_channels = in_channels
         self.model = nn.Sequential(
-            nn.Conv2d(3, 16, kernel_size=3, stride=2, padding=1, bias=False), # 64x64
+            nn.Conv2d(self.in_channels, 16, kernel_size=3, stride=2, padding=1, bias=False), # 64x64
             nn.BatchNorm2d(16),
             nn.ReLU(),
             nn.Conv2d(16, 32, kernel_size=3, stride=2, padding=1, bias=False), # 32x32
