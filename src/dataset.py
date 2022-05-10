@@ -7,8 +7,10 @@ from torchvision.datasets import ImageFolder
 from torchvision import transforms
 from torch.utils.data import random_split
 import os
+import cv2
 
 from pytorch_lightning import LightningDataModule
+from sklearn.model_selection import train_test_split
 
 
 class ImageDataModule(LightningDataModule):
@@ -155,3 +157,59 @@ def get_radiomics_dataset():
     test_labels = np.load(os.path.join(data_path, 'test_labels.npy'))
     
     return train_data, train_labels, val_data, val_labels, test_data, test_labels
+
+class SIFTDataset(Dataset):
+    def __init__(self, data):
+        self.data = data
+
+    def __len__(self):
+        return self.data.__len__()
+
+    def __getitem__(self, idx):
+        label, feature = self.data[idx]
+        feature = np.expand_dims(feature, axis=0)
+        return torch.tensor(feature, dtype=torch.float), torch.tensor(label, dtype=torch.long)
+
+class SIFTDataModule(LightningDataModule):
+    def __init__(self, batch_size=32, num_workers=0):
+        super().__init__()
+        self.batch_size = batch_size
+        self.num_workers = num_workers
+
+    def setup(self, stage=None):
+        print("SIFT DataModule: setup...")
+        data_path = "../data/images"
+
+        data = []
+        for file in os.listdir(data_path + "/yes"):
+            img = cv2.imread(data_path + "/yes/" + file)
+            sift = cv2.SIFT_create()
+            kp, desc = sift.detectAndCompute(img, None)
+            features = np.resize(desc, (256, 256))
+            label = np.array([1])
+            data.append([label, features])
+
+        for file in os.listdir(data_path + "/no"):
+            img = cv2.imread(data_path + "/no/" + file)
+            kp, desc = sift.detectAndCompute(img, None)
+            features = np.resize(desc, (256, 256))
+            label = np.array([0])
+            data.append([label, features])
+
+        train, test = train_test_split(data, test_size= 0.1)
+        train, val = train_test_split(train, test_size=0.11)
+
+        self.train_set = SIFTDataset(train)
+        self.test_set = SIFTDataset(test)
+        self.val_set = SIFTDataset(val)
+
+        print("SIFT Datamodule: ...complete!")
+
+    def train_dataloader(self):
+        return DataLoader(self.train_set, batch_size=self.batch_size, num_workers=self.num_workers)
+
+    def val_dataloader(self):
+        return DataLoader(self.val_set, batch_size=self.batch_size, num_workers=self.num_workers)
+
+    def test_dataloader(self):
+        return DataLoader(self.test_set, batch_size=self.batch_size, num_workers=self.num_workers)
