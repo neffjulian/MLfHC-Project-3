@@ -153,3 +153,4 @@ cython_debug/
 
 # Dataset
 logs/
+lightning_logs/
