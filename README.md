@@ -16,14 +16,6 @@ Create the conda environment for the project. A version of conda must be install
 
 This dataset contains a mix of samples from the Kaggle datasets Brain MRI Images for Brain Tumor Detection and Brain Tumor Classification (MRI) datasets.
 
-## Experiments
-
-Each experiment has its own config file in the configs folder. An experiment can be run through
-
-```bash
-  python main.py --config configs/base/mitbih_baseline_cnn.yaml
-```
-
 ## Authors
 
 - [@Julian Neff](https://github.com/neffjulian)
