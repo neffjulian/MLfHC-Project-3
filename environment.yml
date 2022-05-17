@@ -6,14 +6,12 @@ channels:
 
 dependencies:
   - python=3.9
+  - pip
+  - scikit-learn
   - numpy
   - matplotlib
   - seaborn
   - ipykernel
   - pandas
-  - scikit-learn
-  - pytorch-lightning
-  - torchmetrics
-  - tensorboard
-  - tensorflow
-  - shap
+  - pip:
+    - pytorch-lightning==1.6.0
