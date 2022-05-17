@@ -183,11 +183,18 @@ class SIFTDataModule(LightningDataModule):
         data = []
         for file in os.listdir(data_path + "/yes"):
             img = cv2.imread(data_path + "/yes/" + file)
+            img2 = cv2.flip(img, 0)
             sift = cv2.SIFT_create()
             kp, desc = sift.detectAndCompute(img, None)
             features = np.resize(desc, (256, 256))
             label = np.array([1])
             data.append([label, features])
+            img = cv2.flip(img, 0)
+            kp, desc = sift.detectAndCompute(img, None)
+            features = np.resize(desc, (256, 256))
+            label = np.array([1])
+            data.append([label, features])
+
 
         for file in os.listdir(data_path + "/no"):
             img = cv2.imread(data_path + "/no/" + file)
@@ -195,9 +202,14 @@ class SIFTDataModule(LightningDataModule):
             features = np.resize(desc, (256, 256))
             label = np.array([0])
             data.append([label, features])
+            img = cv2.flip(img, 0) 
+            kp, desc = sift.detectAndCompute(img, None)
+            features = np.resize(desc, (256, 256))
+            label = np.array([0])
+            data.append([label, features])
 
         train, test = train_test_split(data, test_size= 0.1)
-        train, val = train_test_split(train, test_size=0.11)
+        train, val = train_test_split(train, test_size=0.15)
 
         self.train_set = SIFTDataset(train)
         self.test_set = SIFTDataset(test)
